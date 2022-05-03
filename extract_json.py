@@ -9,7 +9,7 @@ bucket_contents = s3_client.list_objects_v2(Bucket='data-28-final-project-files-
 paginator = s3_client.get_paginator('list_objects_v2')
 
 op_param = {'Bucket': 'data-28-final-project-files-group2',
-            'Prefix': 'Talent'}
+            'Prefix': 'Talent', 'MaxItems':10000}
 page_iter = paginator.paginate(**op_param)
 
 
