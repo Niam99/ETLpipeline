@@ -24,11 +24,12 @@ def extract_data():
                 s3_object = s3_client.get_object(Bucket=bucket_name, Key=result_json)
                 data = json.load(s3_object['Body'])  # returns contents of file as dictionary
                 data_df = pd.DataFrame.from_dict(data, orient='index').T  # from dictionary converts to dataframe
+                data_df['id'] = content['Key'].split('/')[1].split('.')[0] #adds if from the file name
                 combined_data = pd.concat([combined_data, data_df], axis=0)  # adds data onto the dataframe
                 combined_data.to_csv("final_json_all.csv", encoding='utf-8', index=False)  # converts data to csv
     return combined_data
 
 
 a=extract_data()
-print(a.shape)
+print(a.shape())
 
