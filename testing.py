@@ -1,0 +1,46 @@
+import pandas as pd
+import json
+import boto3
+
+s3_client = boto3.client('s3')
+
+bucket_list = s3_client.list_buckets()
+bucket_name = 'data-28-final-project-files-group2'
+folder_name = 'Talent'
+
+
+bucket_contents = s3_client.list_objects_v2(Bucket=bucket_name, Prefix= folder_name) #gets all contents from Talent file
+# list_of_file = [] #Getting List of all file names in Talent folder
+# for element in bucket_contents['Contents']:
+#     list_of_file.append(element['Key'])
+#
+paginator = s3_client.get_paginator('list_objects_v2')
+
+op_param = {'Bucket': 'data-28-final-project-files-group2',
+            'Prefix': 'Talent'}
+page_iter = paginator.paginate(**op_param)
+
+list1=[]
+for page in page_iter:
+    for content in page['Contents']:
+        if content['Key'].endswith('.json'):
+            result_json = content['Key']
+            #s3_object = s3_client.get_object(Bucket=bucket_name, Key=result_json)
+            list1.append(content['Key'])#.read() s3_object['Body'].read()
+
+print(len(list1))
+print(list1[0:10])
+
+
+def extract_data(input_data):
+    combined_data = pd.DataFrame()
+    for item in input_data:
+        s3_object = s3_client.get_object(Bucket=bucket_name, Key=item)
+        data = json.load(s3_object['Body'])# returns contents of file as dictionary
+        data_df = pd.DataFrame.from_dict(data, orient='index').T #from dictionary converts to dataframe
+        combined_data = pd.concat([combined_data, data_df], axis = 0) #adds data onto the dataframe
+        combined_data.to_csv("final_json_all.csv", encoding='utf-8', index=False) #converts data to csv
+    return combined_data
+#
+# a=extract_data(list_of_file)
+# print(a)
