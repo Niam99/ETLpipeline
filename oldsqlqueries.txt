@@ -1,0 +1,132 @@
+DROP TABLE IF EXISTS spartatestday;
+CREATE TABLE spartatestday(
+    trainee_name varchar(255) PRIMARY KEY NOT NULL,
+    psychometrics_score varchar(255),
+    presentation_score varchar(255),
+    date_of_test date,
+    academy varchar(255)
+    #FOREIGN KEY (trainee_name) REFERENCES trainees(trainee_name)
+    );
+
+DROP TABLE IF EXISTS applicants;
+
+CREATE TABLE applicants(
+	applicants_ID int PRIMARY KEY NOT NULL,
+    trainee_name varchar(255),
+    gender varchar(255),
+    dob date,
+    email varchar(255),
+    city varchar(255),
+    address varchar(255),
+    postcode varchar(255),
+    phone_number int,
+    uni varchar(255),
+    degree varchar(255),
+    invite_date date,
+    month date,
+    invited_by varchar(255),
+    #FOREIGN KEY (trainee_name) REFERENCES trainees(trainee_name)
+    );
+    
+
+
+DROP TABLE IF EXISTS talent;
+CREATE TABLE talent(
+	talent_ID int PRIMARY KEY NOT NULL,
+	trainee_name varchar(255),
+	talent_date date,
+	tech_self_score int,
+	strengths varchar(255),
+	weakness varchar(255),
+	self_dev boolean,
+	geo boolean,
+	financial boolean,
+	result boolean,
+	course_interest varchar(255),
+	#FOREIGN KEY (trainee_name) REFERENCES trainees(trainee_name)
+);
+
+
+
+DROP TABLE IF EXISTS trainees;
+create table trainees(
+trainee_ID int,
+trainee_name varchar(255) PRIMARY KEY NOT NULL,
+trainer varchar(255),
+analytic_w1 int,
+independent_w1 int,
+determined_w1 int,
+professional_w1 int,
+studious_w1 int,
+imaginative_w1 int,
+analytic_w2 int,
+independent_w2 int,
+determined_w2 int,
+professional_w2 int,
+studious_w2 int,
+imaginative_w2 int,
+analytic_w3 int,
+independent_w3 int,
+determined_w3 int,
+professional_w3 int,
+studious_w3 int,
+imaginative_w3 int,
+analytic_w4 int,
+independent_w4 int,
+determined_w4 int,
+professional_w4 int,
+studious_w4 int,
+imaginative_w4 int,
+analytic_w5 int,
+independent_w5 int,
+determined_w5 int,
+professional_w5 int,
+studious_w5 int,
+imaginative_w5 int,
+analytic_w6 int,
+independent_w6 int,
+determined_w6 int,
+professional_w6 int,
+studious_w6 int,
+imaginative_w6 int,
+analytic_w7 int,
+independent_w7 int,
+determined_w7 int,
+professional_w7 int,
+studious_w7 int,
+imaginative_w7 int,
+analytic_w8 int,
+independent_w8 int,
+determined_w8 int,
+professional_w8 int,
+studious_w8 int,
+imaginative_w8 int,
+analytic_w9 int,
+independent_w9 int,
+determined_w9 int,
+professional_w9 int,
+studious_w9 int,
+imaginative_w9 int,
+analytic_w10 int,
+independent_w10 int,
+determined_w10 int,
+professional_w10 int,
+studious_w10 int,
+imaginative_w10 int,
+course_name varchar(255),
+course_start_date date
+);
+
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/spartadaytxt.csv' 
+INTO TABLE spartatestday 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/Applicants.csv' 
+IGNORE INTO TABLE applicants 
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
